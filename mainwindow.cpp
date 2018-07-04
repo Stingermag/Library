@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 }
-
+int bookcount = 0;
 class Book
 {
   public:
@@ -51,11 +51,11 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-Book book1[4];
+Book book1[20];
 
 void MainWindow::on_pushButton_clicked()
 {
-    int count = -1,bookcount = 0;
+    int count = -1;
     QString t;
     QString namee;
     QString avtore;
@@ -131,26 +131,8 @@ void MainWindow::on_pushButton_clicked()
 }
 
 
-//  QString  buffer1 = "4fsd23";
 
- // QString stroch = ui->textEdit_2->toPlainText();
-
-//  ui->textEdit->insertPlainText(stroch);
-
-
-/*
-QFile fileIn("filein.txt");
-   QFile fileOut("fileout.txt");
-   if(fileIn.open(QIODevice::ReadOnly) && fileOut.open(QIODevice::WriteOnly))
-   { //Если первый файл открыт для чтения, а второй для записи успешн
-       QByteArray block = fileIn.read(10); // Считываем 10 байт в массив block из filein.txt
-       fileOut.write(block); // Записываем 10 байт в файл fileout.txt
-       fileIn.close(); // Закрываем filein.txt
-       fileOut.close(); // Закрываем fileout.txt
-   }
-*/
-
-void MainWindow::on_pushButton_3_clicked()
+void MainWindow::on_pushButton_3_clicked()   // кнопка поиска по автору
 {
     ui->textEdit->setText("\0");
     QString stroch = ui->textEdit_2->toPlainText();
@@ -170,7 +152,7 @@ void MainWindow::on_pushButton_3_clicked()
 
 }
 
-void MainWindow::on_pushButton_4_clicked()
+void MainWindow::on_pushButton_4_clicked()  // кнопка поиска по назвванию
 {
     ui->textEdit->setText("\0");
 
@@ -191,3 +173,63 @@ void MainWindow::on_pushButton_4_clicked()
 }
 
 
+
+void MainWindow::on_pushButton_5_clicked()   // кнопка добавления книг
+{
+    QString Avtor,Name,Year;
+     Avtor = ui->textEdit_4->toPlainText();
+     Name = ui->textEdit_5->toPlainText();
+     Year = ui->textEdit_6->toPlainText();
+//     Avtor.chop(2);
+  //   Name.chop(2);
+    // Year.chop(2);
+
+    book1[bookcount++].Reading(Avtor,Name,Year);
+
+
+    ui->textEdit->insertPlainText(book1[bookcount-1].NameAvtor);
+        ui->textEdit->insertPlainText("\t");
+          ui->textEdit->insertPlainText(book1[bookcount-1].BookName);
+            ui->textEdit->insertPlainText("\t");
+            ui->textEdit->insertPlainText(book1[bookcount-1].Year);
+             ui->textEdit->insertPlainText("\n");
+
+}
+
+void MainWindow::on_pushButton_6_clicked()   //кнопка поиска по дате
+{
+     ui->textEdit->setText("\0");
+
+    QString date1,date2;
+
+    int datee1,datee2;
+    int datee11;
+
+
+    date1 = ui->textEdit_7->toPlainText();
+    date2 = ui->textEdit_8->toPlainText();
+
+    datee1 = date1.toInt();
+    datee11 = date2.toInt();
+
+for(int i = 0;i<20;i++)
+{
+    datee2 = book1[i].Year.toInt();
+
+    if(datee1 <= datee2 &&  datee11 >= datee2)
+    {
+        ui->textEdit->insertPlainText(book1[i].NameAvtor);
+            ui->textEdit->insertPlainText("\t");
+              ui->textEdit->insertPlainText(book1[i].BookName);
+                ui->textEdit->insertPlainText("\t");
+                ui->textEdit->insertPlainText(book1[i].Year);
+                 ui->textEdit->insertPlainText("\n");
+
+
+    }
+
+}
+
+
+
+}
