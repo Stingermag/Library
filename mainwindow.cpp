@@ -6,7 +6,7 @@
 #include<QTextStream>
 #include <QTextCodec> // подключение класса кодека текста
 #include "mainwindow.h"
-
+#include <QMessageBox>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -406,4 +406,9 @@ void MainWindow::on_pushButton_11_clicked()
         file.close();
     }
     }
+}
+
+void MainWindow::on_action_triggered()
+{
+    QMessageBox::warning(this,"gfergtrg","lol");
 }

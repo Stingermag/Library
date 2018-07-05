@@ -38,6 +38,8 @@ private slots:
 
     void on_pushButton_11_clicked();
 
+    void on_action_triggered();
+
 private:
     Ui::MainWindow *ui;
 };
