@@ -3,6 +3,7 @@
 #include <string.h>
 #include <QCoreApplication>
 #include <QFile>
+#include<QTextStream>
 #include <QTextCodec> // подключение класса кодека текста
 #include "mainwindow.h"
 
@@ -20,14 +21,12 @@ class Book
     QString NameAvtor;
     QString BookName;
   public:
-
     void Reading(QString name,QString t,QString avtor)
     {
      Year = t;
      NameAvtor = avtor;
      BookName = name;
     }
-
     QString YearViv()
     {
         return Year;
@@ -40,11 +39,6 @@ class Book
     {
         return NameAvtor;
     }
-
-
-
-
-
 };
 MainWindow::~MainWindow()
 {
@@ -59,13 +53,8 @@ void MainWindow::on_pushButton_clicked()
     QString t;
     QString namee;
     QString avtore;
-
-
     QString stroch;
-
-
-
-    QFile file("C:/Users/koles/Documents/untitled/test.txt");
+    QFile file("D:/Library/test.txt");
 
     if(!file.open(QIODevice::ReadOnly))
     {
@@ -80,54 +69,34 @@ void MainWindow::on_pushButton_clicked()
      {
        stroch = file.readLine();
        {
-     //  for(int i = 0;i<999;i++)
        {
-         //  if(stroch[i] != "\n")
-
                avtore = stroch;
-               avtore.chop(2);
-
+               avtore.chop(1);
        }
-       stroch = file.readLine();
-     //  for(int i = count+1;i<999;i++)
+       stroch = file.readLine(); 
        {
-          // if(stroch[i] != "\n")
                namee = stroch;
-                namee.chop(2);
+                namee.chop(1);
        }
-       stroch = file.readLine();
-      // for(int i = count+1;i<999;i++)
-       {
-          // if(stroch[i] != "\n")
+       stroch = file.readLine();     
+       {     
                t = stroch;
-                t.chop(2);
-
+                t.chop(1);
        }
            book1[bookcount].Reading(namee,t,avtore);
            namee = "";
            t = "";
            avtore = "";
-
           bookcount++;
        }
-
-
      ui->textEdit->insertPlainText(book1[bookcount-1].AvtorrViv());
          ui->textEdit->insertPlainText("\t");
            ui->textEdit->insertPlainText(book1[bookcount-1].NameViv());
-             ui->textEdit->insertPlainText("\t");
+            ui->textEdit->insertPlainText("\t");
              ui->textEdit->insertPlainText(book1[bookcount-1].YearViv());
                 ui->textEdit->insertPlainText("\n");
-
-
-
-
      }
-
     }
-  //  while (stroch[count+1] != "*" && stroch[count+1] != "\0")
-
-
 }
 
 
@@ -176,10 +145,10 @@ void MainWindow::on_pushButton_4_clicked()  // кнопка поиска по н
 
 void MainWindow::on_pushButton_5_clicked()   // кнопка добавления книг
 {
-    QString Avtor,Name,Year;
-     Avtor = ui->textEdit_4->toPlainText();
-     Name = ui->textEdit_5->toPlainText();
-     Year = ui->textEdit_6->toPlainText();
+
+     QString Avtor = ui->textEdit_4->toPlainText();
+     QString Name = ui->textEdit_5->toPlainText();
+     QString Year = ui->textEdit_6->toPlainText();
 //     Avtor.chop(2);
   //   Name.chop(2);
     // Year.chop(2);
@@ -232,4 +201,209 @@ for(int i = 0;i<20;i++)
 
 
 
+}
+
+void MainWindow::on_pushButton_7_clicked()
+{
+
+
+
+    QString  stroch = ui->textEdit_9->toPlainText();
+//    stroch.chop(2);
+//    QStringList strList;
+//    /*Считываем исходный файл в контейнер*/
+
+//    if(!file.open(QIODevice::ReadOnly))
+//    {
+//        ui->textEdit->insertPlainText("не открылось\n");
+//    }
+//    else
+//    {
+//        while(!file.atEnd())
+//        {
+//        strList << file.readLine();
+//        //strList[count].chop(1);
+//        count++;
+//        }
+//        file.close();
+//    }
+    int indicator=0;
+    for(int i=0;i<bookcount;i++)
+    {
+       // if(strList[i]==stroch)
+        if(book1[i].NameAvtor==stroch)
+        {
+            indicator=1;
+            for(int j=i;j<bookcount;j++)
+            {
+                book1[j]=book1[j+1];
+            }
+            bookcount--;
+            //strList.removeAt(ind_del);
+        }
+    }
+
+    if(indicator==1)
+    {
+     QFile file("D:/Library/test.txt");
+    if ((file.exists())&&(file.open(QIODevice::WriteOnly)))
+    {
+        QTextStream stream(&file);
+        //foreach(QString s, strList)
+        for(int i=0;i<bookcount;i++)
+        {
+            QString stroch1=book1[i].AvtorrViv();
+            QString stroch2=book1[i].NameViv();
+            QString stroch3=book1[i].YearViv();
+            stream<<stroch1<<"\n"<<stroch2<<"\n"<<stroch3<<"\n";
+        }
+       // stream<<book1[1].Year;
+        file.close();
+
+
+
+
+    }
+    }
+
+}
+
+
+void MainWindow::on_pushButton_8_clicked()
+{
+    QString  stroch = ui->textEdit_10->toPlainText();
+    int indicator=0;
+    for(int i=0;i<bookcount;i++)
+    {
+
+        if(book1[i].BookName==stroch)
+        {
+            indicator=1;
+            for(int j=i;j<bookcount;j++)
+            {
+                book1[j]=book1[j+1];
+            }
+            bookcount--;
+        }
+    }
+    if(indicator==1)
+    {
+     QFile file("D:/Library/test.txt");
+    if ((file.exists())&&(file.open(QIODevice::WriteOnly)))
+    {
+        QTextStream stream(&file);
+
+        for(int i=0;i<bookcount;i++)
+        {
+            QString stroch1=book1[i].AvtorrViv();
+            QString stroch2=book1[i].NameViv();
+            QString stroch3=book1[i].YearViv();
+            stream<<stroch1<<"\n"<<stroch2<<"\n"<<stroch3<<"\n";
+        }
+        file.close();
+    }
+    }
+}
+
+void MainWindow::on_pushButton_9_clicked()
+{
+    QString  stroch = ui->textEdit_11->toPlainText();
+    QString  s_change=ui->textEdit_12->toPlainText();
+    int indicator=0;
+    for(int i=0;i<bookcount;i++)
+    {
+        QString s_compare_tec=book1[i].AvtorrViv();
+        if(s_compare_tec==stroch)
+        {
+            indicator=1;
+            book1[i].NameAvtor=s_change;
+
+        }
+    }
+    if(indicator==1)
+    {
+     QFile file("D:/Library/test.txt");
+    if ((file.exists())&&(file.open(QIODevice::WriteOnly)))
+    {
+        QTextStream stream(&file);
+
+        for(int i=0;i<bookcount;i++)
+        {
+            QString stroch1=book1[i].AvtorrViv();
+            QString stroch2=book1[i].NameViv();
+            QString stroch3=book1[i].YearViv();
+            stream<<stroch1<<"\n"<<stroch2<<"\n"<<stroch3<<"\n";
+        }
+        file.close();
+    }
+    }
+}
+
+
+void MainWindow::on_pushButton_10_clicked()
+{
+    QString  stroch = ui->textEdit_13->toPlainText();
+    QString  s_change=ui->textEdit_14->toPlainText();
+    int indicator=0;
+    for(int i=0;i<bookcount;i++)
+    {
+        QString s_compare_tec=book1[i].NameViv();
+        if(s_compare_tec==stroch)
+        {
+            indicator=1;
+            book1[i].BookName=s_change;
+
+        }
+    }
+    if(indicator==1)
+    {
+     QFile file("D:/Library/test.txt");
+    if ((file.exists())&&(file.open(QIODevice::WriteOnly)))
+    {
+        QTextStream stream(&file);
+
+        for(int i=0;i<bookcount;i++)
+        {
+            QString stroch1=book1[i].AvtorrViv();
+            QString stroch2=book1[i].NameViv();
+            QString stroch3=book1[i].YearViv();
+            stream<<stroch1<<"\n"<<stroch2<<"\n"<<stroch3<<"\n";
+        }
+        file.close();
+    }
+    }
+}
+
+void MainWindow::on_pushButton_11_clicked()
+{
+    QString  stroch = ui->textEdit_15->toPlainText();
+    QString  s_change=ui->textEdit_16->toPlainText();
+    int indicator=0;
+    for(int i=0;i<bookcount;i++)
+    {
+        QString s_compare_tec=book1[i].YearViv();
+        if(s_compare_tec==stroch)
+        {
+            indicator=1;
+            book1[i].Year=s_change;
+
+        }
+    }
+    if(indicator==1)
+    {
+     QFile file("D:/Library/test.txt");
+    if ((file.exists())&&(file.open(QIODevice::WriteOnly)))
+    {
+        QTextStream stream(&file);
+
+        for(int i=0;i<bookcount;i++)
+        {
+            QString stroch1=book1[i].AvtorrViv();
+            QString stroch2=book1[i].NameViv();
+            QString stroch3=book1[i].YearViv();
+            stream<<stroch1<<"\n"<<stroch2<<"\n"<<stroch3<<"\n";
+        }
+        file.close();
+    }
+    }
 }
