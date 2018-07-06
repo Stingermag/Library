@@ -45,16 +45,17 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-Book book1[20];
+Book book1[100];
 
 void MainWindow::on_pushButton_clicked()
 {
+     bookcount = 0;
     int count = -1;
     QString t;
     QString namee;
     QString avtore;
     QString stroch;
-    QFile file("D:/Library/test.txt");
+    QFile file("C:/Users/koles/Desktop/Library-master/test.txt");
 
     if(!file.open(QIODevice::ReadOnly))
     {
@@ -96,7 +97,9 @@ void MainWindow::on_pushButton_clicked()
              ui->textEdit->insertPlainText(book1[bookcount-1].YearViv());
                 ui->textEdit->insertPlainText("\n");
      }
+       // изза этого он у нас поэтому и падает прога, что геометсрически за пределы выходит
     }
+
 }
 
 
@@ -106,7 +109,7 @@ void MainWindow::on_pushButton_3_clicked()   // кнопка поиска по �
     ui->textEdit->setText("\0");
     QString stroch = ui->textEdit_2->toPlainText();
 
-    for(int i =0;i<4;i++)
+    for(int i =0;i<bookcount;i++)
     {
         if(book1[i].NameAvtor == stroch)
         {
@@ -127,7 +130,7 @@ void MainWindow::on_pushButton_4_clicked()  // кнопка поиска по н
 
     QString stroch = ui->textEdit_3->toPlainText();
 
-    for(int i =0;i<4;i++)
+    for(int i =0;i<bookcount;i++)
     {
         if(book1[i].BookName == stroch)
         {
@@ -136,6 +139,7 @@ void MainWindow::on_pushButton_4_clicked()  // кнопка поиска по н
                   ui->textEdit->insertPlainText(book1[i].NameViv());
                     ui->textEdit->insertPlainText("\t");
                     ui->textEdit->insertPlainText(book1[i].YearViv());
+                    ui->textEdit->insertPlainText("\n");
         }
     }
 
@@ -245,7 +249,7 @@ void MainWindow::on_pushButton_7_clicked()
 
     if(indicator==1)
     {
-     QFile file("D:/Library/test.txt");
+     QFile file("C:/Users/koles/Desktop/Library-master/test.txt");
     if ((file.exists())&&(file.open(QIODevice::WriteOnly)))
     {
         QTextStream stream(&file);
@@ -288,7 +292,7 @@ void MainWindow::on_pushButton_8_clicked()
     }
     if(indicator==1)
     {
-     QFile file("D:/Library/test.txt");
+     QFile file("C:/Users/koles/Desktop/Library-master/test.txt");
     if ((file.exists())&&(file.open(QIODevice::WriteOnly)))
     {
         QTextStream stream(&file);
@@ -322,7 +326,7 @@ void MainWindow::on_pushButton_9_clicked()
     }
     if(indicator==1)
     {
-     QFile file("D:/Library/test.txt");
+     QFile file("C:/Users/koles/Desktop/Library-master/test.txt");
     if ((file.exists())&&(file.open(QIODevice::WriteOnly)))
     {
         QTextStream stream(&file);
@@ -357,7 +361,7 @@ void MainWindow::on_pushButton_10_clicked()
     }
     if(indicator==1)
     {
-     QFile file("D:/Library/test.txt");
+     QFile file("C:/Users/koles/Desktop/Library-master/test.txt");
     if ((file.exists())&&(file.open(QIODevice::WriteOnly)))
     {
         QTextStream stream(&file);
@@ -391,7 +395,7 @@ void MainWindow::on_pushButton_11_clicked()
     }
     if(indicator==1)
     {
-     QFile file("D:/Library/test.txt");
+     QFile file("C:/Users/koles/Desktop/Library-master/test.txt");
     if ((file.exists())&&(file.open(QIODevice::WriteOnly)))
     {
         QTextStream stream(&file);
@@ -410,5 +414,5 @@ void MainWindow::on_pushButton_11_clicked()
 
 void MainWindow::on_action_triggered()
 {
-    QMessageBox::warning(this,"gfergtrg","lol");
+    QMessageBox::about(this,"Интсрукция","Я не лох");
 }
